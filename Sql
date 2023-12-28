@@ -1,0 +1,28 @@
+-- Create a new database
+CREATE DATABASE RainbowSchool;
+
+-- Use the RainbowSchool database
+USE RainbowSchool;
+
+-- Create a Students table
+CREATE TABLE Students (
+    StudentId INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    CONSTRAINT UC_StudentName UNIQUE (FirstName, LastName)
+);
+
+-- Create a Subjects table
+CREATE TABLE Subjects (
+    SubjectId INT PRIMARY KEY IDENTITY(1,1),
+    SubjectName NVARCHAR(50) NOT NULL,
+    CONSTRAINT UC_SubjectName UNIQUE (SubjectName)
+);
+
+-- Create a Marks table
+CREATE TABLE Marks (
+    MarkId INT PRIMARY KEY IDENTITY(1,1),
+    StudentId INT FOREIGN KEY REFERENCES Students(StudentId),
+    SubjectId INT FOREIGN KEY REFERENCES Subjects(SubjectId),
+    Mark INT NOT NULL CHECK (Mark >= 0 AND Mark <= 100)
+);
